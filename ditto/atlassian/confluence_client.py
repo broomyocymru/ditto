@@ -16,29 +16,19 @@ class ConfluenceClient:
         self.save_content = atlassian_password.ClearPasswordOnException(username).decorator(self.save_content)
 
     def page(self, page_id):
-        query = { 'expand': 'version'}
+        query = {'expand': 'version'}
         url = self.base_url + '/rest/api/content/' + page_id + '?' + urllib.urlencode(query)
-        response =  requests.get(url, auth=(self.username, self.password), headers={'Accept': 'application/json'})
-        response.raise_for_status()
-        retval = response.json()
+        response = requests.get(url, auth=(self.username, self.password), headers={'Accept': 'application/json'})
 
-        if 'errorMessages' in retval:
-            raise ValueError(page_id + ': ' + ','.join(retval['errorMessages']))
-
-        return retval
+        return self.error_check(page_id, response)
 
     def get_page_id(self, space, title):
         try:
             url = self.base_url + '/rest/api/content/?title=' + title + '&spaceKey=' + space
             response = requests.get(url, auth=(self.username, self.password), headers={'Accept': 'application/json'})
-            response.raise_for_status()
-            retval = response.json()
-
-            if 'errorMessages' in retval:
-                raise ValueError(title + ': ' + ','.join(retval['errorMessages']))
-
-            return retval["results"][0]["id"]
-        except:
+            obj = self.error_check(title, response)
+            return obj["results"][0]["id"]
+        except requests.exceptions.RequestException:
             return None
 
     def new_child_page(self, parent_page_id, space, title, content):
@@ -75,23 +65,11 @@ class ConfluenceClient:
             })
             url = self.base_url + '/rest/api/content/' + page_id
             response = requests.put(url, auth=(self.username, self.password), headers={'Accept': 'application/json', 'Content-type': 'application/json'}, data=data)
-            response.raise_for_status()
-            retval = response.json()
-
-            if 'errorMessages' in retval:
-                raise ValueError(page_id + ': ' + ','.join(retval['errorMessages']))
-
-            return retval
+            return self.error_check(page_id, response)
         else:
             url = self.base_url + '/rest/api/content'
             response = requests.post(url, auth=(self.username, self.password), headers={'Accept': 'application/json', 'Content-type': 'application/json'}, data=data)
-            response.raise_for_status()
-            retval = response.json()
-
-            if 'errorMessages' in retval:
-                raise ValueError(page_id + ': ' + ','.join(retval['errorMessages']))
-
-            return retval
+            return self.error_check(page_id, response)
 
     def save_content(self, page_id, version, title, content):
         data = json.dumps({
@@ -107,10 +85,14 @@ class ConfluenceClient:
         })
         url = self.base_url + '/rest/api/content/' + page_id
         response = requests.put(url, auth=(self.username, self.password), headers={'Accept': 'application/json', 'Content-type': 'application/json'}, data=data)
+        return self.error_check(page_id, response)
+
+    @staticmethod
+    def error_check(prefix, response):
         response.raise_for_status()
-        retval = response.json()
+        obj = response.json()
 
-        if 'errorMessages' in retval:
-            raise ValueError(page_id + ': ' + ','.join(retval['errorMessages']))
+        if 'errorMessages' in obj:
+            raise ValueError(prefix + ': ' + ','.join(obj['errorMessages']))
 
-        return retval
+        return obj
