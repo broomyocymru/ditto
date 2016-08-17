@@ -11,3 +11,6 @@ python:
 install: "pip install -r requirements.txt"
 # command to run tests
 script: python setup.py test
+addons:
+    code_climate:
+        repo_token: b1bf8a31d4dc80fc56627c5020398391d65bcdf52c78563bda5b9f4738cc6f65
