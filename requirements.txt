@@ -11,3 +11,4 @@ vcversioner==2.14.0.0
 jinja2==2.8
 keyring==9.0
 colorama==0.3.7
+codeclimate-test-reporter
