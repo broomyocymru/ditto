@@ -9,7 +9,7 @@ Its aim is provide the platform to allow teams to quickly use and share automati
 
 # Questions and issues
 
--todo
+Raise an issue [here](https://github.com/broomyocymru/ditto/issues/) or via twitter [@ditto_cli](https://twitter.com/ditto_cli)
 
 ## Thanks
 [Click](http://click.pocoo.org/) for the awesome CLI package! [GitHub](github.com) for the repo, [TravisCI](https://travis-ci.org/) and [CodeClimate](https://codeclimate.com/) for the testing
