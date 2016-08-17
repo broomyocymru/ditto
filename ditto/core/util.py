@@ -7,7 +7,7 @@ import shutil
 import sys
 from socket import gethostname
 from subprocess import Popen, PIPE, STDOUT
-
+from pip import get_installed_distributions
 import pkg_resources
 
 from ditto.core import logger
@@ -125,5 +125,28 @@ def copy_file(current_path, local_path):
     return
 
 
+def oss_licenses():
+    meta_files_to_check = ['PKG-INFO', 'METADATA']
+    licenses = {}
+
+    for installed_distribution in get_installed_distributions():
+        found_license = False
+        for metafile in meta_files_to_check:
+            if not installed_distribution.has_metadata(metafile):
+                continue
+            for line in installed_distribution.get_metadata_lines(metafile):
+                if 'License: ' in line:
+                    (k, lic) = line.split(': ', 1)
+
+                    if lic not in licenses:
+                        licenses[lic] = []
+                    licenses[lic].append(installed_distribution.project_name)
+                    found_license = True
+        if not found_license:
+            if "No License" not in licenses:
+                licenses["No License"] = []
+            licenses["No License"].append(installed_distribution.project_name)
+
+    return licenses
 
 

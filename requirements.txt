@@ -12,3 +12,4 @@ jinja2==2.8
 keyring==9.0
 colorama==0.3.7
 codeclimate-test-reporter
+pip
