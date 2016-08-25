@@ -43,7 +43,7 @@ setup(
             'ditto = ditto.ditto:cli',
         ],
     },
-    packages=['ditto', 'ditto.core', 'ditto.commands', 'ditto.atlassian'],
+    packages=['ditto', 'ditto.core', 'ditto.commands'],
     include_package_data=True,
     platforms='any',
     zip_safe=False,

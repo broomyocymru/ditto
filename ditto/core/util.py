@@ -80,8 +80,9 @@ def read_json(path):
 
 
 def read_file_to_str(path):
-    f = open(path, "r")
-    return f.readlines()
+    with open(path) as f:
+        data = "".join(line.rstrip() for line in f)
+    return data
 
 
 def write_json(path, data):

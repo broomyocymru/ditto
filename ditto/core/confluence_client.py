@@ -1,9 +1,6 @@
 import json
 import urllib
-
 import requests
-
-import atlassian_password
 
 
 class ConfluenceClient:
@@ -11,9 +8,6 @@ class ConfluenceClient:
         self.base_url = url
         self.username = username
         self.password = password
-
-        self.page = atlassian_password.ClearPasswordOnException(username).decorator(self.page)
-        self.save_content = atlassian_password.ClearPasswordOnException(username).decorator(self.save_content)
 
     def page(self, page_id):
         query = {'expand': 'version'}
@@ -75,7 +69,9 @@ class ConfluenceClient:
         data = json.dumps({
             'type': 'page',
             'title': title,
-            'version': { 'number': version},
+            'version': {
+                'number': version
+            },
             'body': {
                 'storage': {
                     'value': content,

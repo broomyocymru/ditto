@@ -5,7 +5,7 @@ from ditto.core import util
 
 @click.group('docker')
 def cli():
-    """docker commands"""
+    """Useful commands when using docker"""
     pass
 
 
@@ -13,6 +13,7 @@ def cli():
 @click.option('--containers/--no-containers', default=True)
 @click.option('--images/--no-images', default=True)
 def docker_nuke(containers, images):
+    """Remove all docker containers and images"""
     if containers:
         util.shell_run("docker rm $(docker ps -a -q)")
 

@@ -12,6 +12,12 @@ def get(key):
     return val
 
 
+def not_set(key):
+    cls = DittoConfig()
+    val = cls.get(key)
+    return val is None
+
+
 def set(key, val):
     cls = DittoConfig()
     cls.set(key, val)
@@ -40,7 +46,7 @@ class DittoConfig:
     def get(self, key):
         config = self.get_config()
         if key in config:
-            return base64.b64decode(config['key'])
+            return base64.b64decode(config[key])
         else:
             return None
 

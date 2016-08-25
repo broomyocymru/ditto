@@ -4,7 +4,7 @@ from ditto.core import logger, config
 
 @click.group('config')
 def cli():
-    """Configuration commands"""
+    """Manage config to default commands"""
     pass
 
 

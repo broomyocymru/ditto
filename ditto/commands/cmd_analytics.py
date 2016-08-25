@@ -6,7 +6,7 @@ from ditto.ditto import pass_context
 
 @click.group('analytics')
 def cli():
-    """Analytics Commands"""
+    """Configure analytics capture for ditto"""
     pass
 
 
