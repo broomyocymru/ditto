@@ -16,19 +16,19 @@ def setup():
 
 
 def log(msg, *args, **kwargs):
-    log_colour(msg, Fore.GREEN, *args, **kwargs)
+    return log_colour(msg, Fore.GREEN, *args, **kwargs)
 
 
 def vlog(msg, *args, **kwargs):
     ditto_logger = logging.getLogger('ditto-cli')
 
     if ditto_logger.isEnabledFor(logging.DEBUG):
-        log_colour(msg, Fore.CYAN, *args, **kwargs)
+        return log_colour(msg, Fore.CYAN, *args, **kwargs)
 
 
 def json(json):
     pp = pprint.PrettyPrinter(indent=4)
-    log(pp.pformat(json))
+    return log(pp.pformat(json))
 
 
 def vjson(json):
@@ -40,11 +40,11 @@ def vjson(json):
 
 
 def error(msg, *args, **kwargs):
-    log_colour(msg, Fore.RED, *args, **kwargs)
+    return log_colour(msg, Fore.RED, *args, **kwargs)
 
 
 def warn(msg, *args, **kwargs):
-    log_colour(msg, Fore.YELLOW, *args, **kwargs)
+    return log_colour(msg, Fore.YELLOW, *args, **kwargs)
 
 
 def log_colour(msg, colour, *args, **kwargs):
@@ -55,7 +55,9 @@ def log_colour(msg, colour, *args, **kwargs):
         for to_mask in ditto_logger.mask_values:
             msg = msg.replace(to_mask, "****")
 
-    ditto_logger.info(colour + msg, *args, **kwargs)
+    colour_msg = colour + msg
+    ditto_logger.info(colour_msg, *args, **kwargs)
+    return colour_msg
 
 
 def ditto(msg):
