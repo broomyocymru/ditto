@@ -11,7 +11,7 @@ def test_version():
 
 def test_ditto_dir():
     path = util.ditto_dir()
-    assert path.endswith("ditto-cli")
+    assert path.endswith("ditto")
 
 
 def test_today_string():
