@@ -46,14 +46,14 @@ class DittoConfig:
     def get(self, key):
         config = self.get_config()
         if key in config:
-            return base64.b64decode(config[key])
+            return base64.b64decode(config[key].decode('utf-8'))
         else:
             return None
 
     def set(self, key, value, overwrite=True):
         config = self.get_config()
         if overwrite or (key not in config):
-            config[key] = base64.b64encode(b''+value)
+            config[key] = base64.b64encode(value.encode('utf-8'))
             self.set_config(config)
 
     def rm(self, key):
