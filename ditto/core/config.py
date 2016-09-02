@@ -53,7 +53,7 @@ class DittoConfig:
     def set(self, key, value, overwrite=True):
         config = self.get_config()
         if overwrite or (key not in config):
-            config[key] = base64.b64encode(value)
+            config[key] = base64.b64encode(b''+value)
             self.set_config(config)
 
     def rm(self, key):
