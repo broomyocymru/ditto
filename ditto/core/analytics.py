@@ -23,7 +23,7 @@ class DittoAnalytics(object):
 
     def get_metric(self, key):
         if key in self.data:
-            return self[key]
+            return self.data[key]
         else:
             return None
 
@@ -82,3 +82,4 @@ class Splunk(DittoAnalytics):
             return True
         else:
             logger.vlog("Analytics Disabled")
+            return True

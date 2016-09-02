@@ -72,6 +72,10 @@ def mask(val):
 
 def get_masks():
     ditto_logger = logging.getLogger('ditto-cli')
+
+    if not hasattr(ditto_logger, 'mask_values'):
+        ditto_logger.mask_values = []
+
     return ditto_logger.mask_values
 
 
