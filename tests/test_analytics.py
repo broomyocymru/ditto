@@ -15,13 +15,13 @@ def test_analytics_add_metrics():
     service.add_metric("a", "test")
     service.add_metric("b", 100)
     service.add_metric("c", 1.100)
-    service.add_metric("d", {"test", "result"})
+    service.add_metric("d", {"test": "result"})
 
     data = service.get_analytics()
     assert data["a"] == "test"
     assert data["b"] == 100
     assert data["c"] == 1.100
-    assert data["d"] == {"test", "result"}
+    assert data["d"] == {"test": "result"}
 
 
 def test_get_metric():
