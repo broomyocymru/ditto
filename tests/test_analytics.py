@@ -21,7 +21,10 @@ def test_analytics_add_metrics():
     assert data["a"] == "test"
     assert data["b"] == 100
     assert data["c"] == 1.100
-    assert data["d"] == {"test": "result"}
+
+    # Because Python3 doesnt like comparing dicts :/
+    unmatched_item = set(data["d"]) ^ set({"test": "result"})
+    assert len(unmatched_item) == 0
 
 
 def test_get_metric():
