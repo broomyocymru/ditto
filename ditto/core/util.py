@@ -60,6 +60,12 @@ def shell_run(cmd, cwd=os.getcwd(), check_call=True, ctx=None):
     return {"result_code": p.returncode, "std_out": output}
 
 
+def is_shell_tool(name):
+    """Check whether `name` is on PATH."""
+    from distutils.spawn import find_executable
+    return find_executable(name) is not None
+
+
 def unique(seq):
     seen = set()
     for item in seq:
